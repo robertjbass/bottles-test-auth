@@ -1,10 +1,9 @@
 {
-  "name": "test-bottles",
+  "name": "bottles-test-auth",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon --watch src --ext js,ts,mjs --exec 'node src/index.js'"
   },
   "keywords": [],
