@@ -5,34 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login / Register</title>
     <style>
+      :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f5a623;
+        --background-color: #f8f9fa;
+        --text-color: #333;
+        --input-bg: #fff;
+        --input-border: #e0e0e0;
+        --button-hover: #3a7bd5;
+      }
       body {
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
-        background-color: #f0f0f0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: var(--text-color);
       }
       .container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: var(--input-bg);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
       }
       .tabs {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid var(--input-border);
       }
       .tab {
-        padding: 10px 20px;
+        padding: 1rem 1.5rem;
         cursor: pointer;
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        border-bottom: none;
+        font-weight: bold;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        position: relative;
       }
       .tab.active {
-        background-color: white;
+        color: var(--primary-color);
+      }
+      .tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary-color);
       }
       .tab-content {
         display: none;
@@ -44,22 +67,51 @@
         display: flex;
         flex-direction: column;
       }
+      .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
       input {
-        margin: 10px 0;
-        padding: 8px;
-        border: 1px solid #ddd;
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--input-border);
         border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+      input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+      label {
+        position: absolute;
+        left: 0.75rem;
+        top: 0.75rem;
+        color: #999;
+        pointer-events: none;
+        transition: all 0.3s ease;
+      }
+      input:focus + label,
+      input:not(:placeholder-shown) + label {
+        top: -0.5rem;
+        left: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--primary-color);
+        background-color: var(--input-bg);
+        padding: 0 0.25rem;
       }
       button {
-        background-color: #4caf50;
+        background-color: var(--primary-color);
         color: white;
         border: none;
-        padding: 10px;
+        padding: 0.75rem;
         border-radius: 4px;
         cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
       }
       button:hover {
-        background-color: #45a049;
+        background-color: var(--button-hover);
       }
     </style>
   </head>
@@ -70,34 +122,33 @@
         <div class="tab" data-tab="register">Register</div>
       </div>
       <div id="login" class="tab-content active">
-        <h2>Login</h2>
         <form action="/login" method="POST">
-          <input type="text" name="username" placeholder="Username" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
+          <div class="input-group">
+            <input type="text" name="username" id="login-username" required placeholder=" " />
+            <label for="login-username">Username</label>
+          </div>
+          <div class="input-group">
+            <input type="password" name="password" id="login-password" required placeholder=" " />
+            <label for="login-password">Password</label>
+          </div>
           <button type="submit">Login</button>
         </form>
       </div>
       <div id="register" class="tab-content">
-        <h2>Register</h2>
         <form action="/register" method="POST">
-          <input type="text" name="username" placeholder="Username" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <input
-            type="password"
-            name="confirm_password"
-            placeholder="Confirm Password"
-            required
-          />
+          <div class="input-group">
+            <input type="text" name="username" id="register-username" required placeholder=" " />
+            <label for="register-username">Username</label>
+          </div>
+          <div class="input-group">
+            <input type="password" name="password" id="register-password" required placeholder=" " />
+            <label for="register-password">Password</label>
+          </div>
+          <div class="input-group">
+            <input type="password" name="confirm_password" id="confirm-password" required placeholder=" " />
+            <label for="confirm-password">Confirm Password</label>
+          </div>
+
           <button type="submit">Register</button>
         </form>
       </div>
@@ -112,6 +163,36 @@
           document.getElementById(tab.dataset.tab).classList.add("active");
         });
       });
+
+      // Add smooth transitions
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('focus', () => {
+          input.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', () => {
+          input.parentElement.classList.remove('focused');
+        });
+      });
+
+      // Add simple form validation
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let isValid = true;
+          form.querySelectorAll('input').forEach(input => {
+            if (!input.value.trim()) {
+              isValid = false;
+              input.classList.add('error');
+            } else {
+              input.classList.remove('error');
+            }
+          });
+          if (isValid) {
+            form.submit();
+          }
+        });
+      });
     </script>
   </body>
 </html>
+
