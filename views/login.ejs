@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login / Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-bottom: none;
+      }
+      .tab.active {
+        background-color: white;
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input {
+        margin: 10px 0;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active" data-tab="login">Login</div>
+        <div class="tab" data-tab="register">Register</div>
+      </div>
+      <div id="login" class="tab-content active">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+      <div id="register" class="tab-content">
+        <h2>Register</h2>
+        <form action="/register" method="POST">
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Confirm Password"
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab, .tab-content")
+            .forEach((el) => el.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -2,15 +2,24 @@
   "name": "test-bottles",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    @b add serve script that uses nodemon to run the server and refresh anytime a ts or js file changes inside of the src folder
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon --watch src --ext js,ts,mjs --exec 'node src/index.js'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
